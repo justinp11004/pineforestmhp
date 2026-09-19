@@ -1,0 +1,35 @@
+import { sqliteTable, text, integer, index } from 'drizzle-orm/sqlite-core';
+export const inquiries = sqliteTable('inquiries', {
+  id: text('id').primaryKey(),
+  reference: text('reference').notNull(),
+  name: text('name').notNull(),
+  email: text('email').notNull(),
+  phone: text('phone').notNull().default(''),
+  homeId: text('home_id').notNull().default(''),
+  homeName: text('home_name').notNull(),
+  intent: text('intent').notNull(),
+  message: text('message').notNull().default(''),
+  consent: integer('consent').notNull(),
+  createdAt: integer('created_at').notNull(),
+  networkHash: text('network_hash').notNull(),
+  payloadHash: text('payload_hash').notNull().default(''),
+  lotId: text('lot_id').notNull().default(''),
+  lotStatus: text('lot_status').notNull().default(''),
+  timeline: text('timeline').notNull().default(''),
+  contactMethod: text('contact_method').notNull().default('email'),
+  source: text('source').notNull().default('direct'),
+  campaign: text('campaign').notNull().default(''),
+  consentVersion: text('consent_version').notNull().default('2026-09-13'),
+  status: text('status').notNull().default('new'),
+  notes: text('notes').notNull().default(''),
+  revision: integer('revision').notNull().default(0),
+  updatedAt: integer('updated_at').notNull().default(0),
+}, table => [index('idx_inquiries_network_created').on(table.networkHash, table.createdAt)]);
+
+export const lotAvailability = sqliteTable('lot_availability', {
+  id: text('id').primaryKey(),
+  status: text('status').notNull(),
+  revision: integer('revision').notNull().default(1),
+  updatedAt: integer('updated_at').notNull(),
+  updatedBy: text('updated_by').notNull(),
+});
